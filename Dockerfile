@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY *.go ./
 
-RUN go build -o /housing-bot
+RUN go build main.go -o /housing-bot
 
 EXPOSE 80
 
