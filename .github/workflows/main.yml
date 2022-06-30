@@ -7,9 +7,9 @@ on:
     branches: [ "main" ]
 
 env:
-  REPO: ${{ github.repository }}
-  SHA: ${{ github.sha }}
-  DEPLOY: ${{ secrets.K8S_DEPLOYMENT }}
+  REPO: ${{ github.repository }} # The owner and repository name like `Codertocat/Hello-World`
+  SHA: ${{ github.sha }} # The commit SHA that triggered the workflow run
+  DEPLOY: ${{ secrets.K8S_DEPLOYMENT }} # The Kubernetes deployment name
 
 jobs:
   
