@@ -35,7 +35,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ REPO }}:${{ SHA }}
+        tags: ${{ env.REPO }}:${{ env.SHA }}
 
     - name: Update Kubernetes deployment
       uses: appleboy/ssh-action@master
@@ -43,4 +43,4 @@ jobs:
         host: ${{ secrets.K8S_HOST }}
         username: ${{ secrets.K8S_USERNAME }}
         key: ${{ secrets.K8S_KEY }}
-        script: kubectl set image deployment ${{ DEPLOY }} ${{ DEPLOY }}=${{ REPO }}:${{ SHA }}
+        script: kubectl set image deployment ${{ env.DEPLOY }} ${{ env.DEPLOY }}=${{ env.REPO }}:${{ env.SHA }}
