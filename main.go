@@ -46,6 +46,7 @@ func WebhookHandler (w http.ResponseWriter, r *http.Request) {
         var b Body
         json.NewDecoder(r.Body).Decode(&b)
         if b.Object == "page" {
+            fmt.Println(b.Entry[0].Messaging[0].Message) // Logging
             fmt.Fprintf(w, b.Entry[0].Messaging[0].Message)  
         }
     }
