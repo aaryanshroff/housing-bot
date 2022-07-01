@@ -18,3 +18,5 @@
 .*.swo
 .*.swp
 
+# Local compiled Go binaries
+bin/*
