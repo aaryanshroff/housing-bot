@@ -15,6 +15,6 @@
 # vendor/
 
 # Temporary Vim files
-*.swo
-*.swp
+.*.swo
+.*.swp
 
