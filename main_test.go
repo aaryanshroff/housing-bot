@@ -1,6 +1,7 @@
 package main
 
 import (
+    "bytes"
     "net/http"
     "net/http/httptest"
     "os"
@@ -15,6 +16,22 @@ func TestGETWebhook(t *testing.T) {
 
     got := response.Body.String()
     want := "CHALLENGE_ACCEPTED"
+
+    if got != want {
+        t.Errorf("got %q, want %q", got, want)
+    }
+}
+
+func TestPOSTWebhook(t *testing.T) {
+    b := []byte(`{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}`)
+
+    request, _ := http.NewRequest(http.MethodPost, "/webhook", bytes.NewBuffer(b));
+    response := httptest.NewRecorder()
+
+    WebhookHandler(response, request)
+
+    got := response.Body.String()
+    want := "TEST_MESSAGE"
 
     if got != want {
         t.Errorf("got %q, want %q", got, want)

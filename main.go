@@ -1,10 +1,24 @@
 package main
 
 import (
+    "encoding/json"
     "fmt"
     "os"
     "net/http"
 )
+
+type Messaging struct {
+    Message string `json:"message"`
+}
+
+type Entry struct {
+    Messaging []Messaging `json:"messaging"`
+}
+
+type Body struct {
+    Object string  `json:"object"`
+    Entry  []Entry `json:"entry"`
+}
 
 func main () {
     http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
@@ -29,6 +43,10 @@ func WebhookHandler (w http.ResponseWriter, r *http.Request) {
         }
 
     case http.MethodPost:
-        fmt.Fprintf(w, "POST /webhook")
+        var b Body
+        json.NewDecoder(r.Body).Decode(&b)
+        if b.Object == "page" {
+            fmt.Fprintf(w, b.Entry[0].Messaging[0].Message)  
+        }
     }
 }
