@@ -24,6 +24,8 @@ func WebhookHandler (w http.ResponseWriter, r *http.Request) {
 
         if t == os.Getenv("FB_WEBHOOK_VERIFY_TOKEN") {
             fmt.Fprintf(w, c)
+        } else {
+            w.WriteHeader(http.StatusUnauthorized)
         }
 
     case http.MethodPost:
