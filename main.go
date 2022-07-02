@@ -7,6 +7,10 @@ import (
     "net/http"
 )
 
+type Message sturct {
+    Text string `json:"text"`
+}
+
 type Messaging struct {
     Message string `json:"message"`
 }
@@ -43,13 +47,10 @@ func WebhookHandler (w http.ResponseWriter, r *http.Request) {
         }
 
     case http.MethodPost:
-        b, _ := io.ReadAll(r.Body)
-        fmt.Println(string(b)) // Print req body for debugging
-        // var b Body
-        // json.NewDecoder(r.Body).Decode(&b)
-        // if b.Object == "page" {
-        //    fmt.Println(b.Entry[0].Messaging[0].Message) // Logging
-        //    fmt.Fprintf(w, b.Entry[0].Messaging[0].Message)  
-        // }
+        var b Body
+        json.NewDecoder(r.Body).Decode(&b)
+        if b.Object == "page" {
+            fmt.Println(b.Entry[0].Messaging[0].Text
+        }
     }
 }
