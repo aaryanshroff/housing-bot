@@ -1,8 +1,8 @@
 package main
 
 import (
-    "encoding/json"
     "fmt"
+    "io"
     "os"
     "net/http"
 )
@@ -43,12 +43,13 @@ func WebhookHandler (w http.ResponseWriter, r *http.Request) {
         }
 
     case http.MethodPost:
-        fmt.Println(string(r.Body)) // Print req body for debugging
-        var b Body
-        json.NewDecoder(r.Body).Decode(&b)
-        if b.Object == "page" {
-            fmt.Println(b.Entry[0].Messaging[0].Message) // Logging
-            fmt.Fprintf(w, b.Entry[0].Messaging[0].Message)  
-        }
+        b, _ := io.ReadAll(r.Body)
+        fmt.Println(string(b)) // Print req body for debugging
+        // var b Body
+        // json.NewDecoder(r.Body).Decode(&b)
+        // if b.Object == "page" {
+        //    fmt.Println(b.Entry[0].Messaging[0].Message) // Logging
+        //    fmt.Fprintf(w, b.Entry[0].Messaging[0].Message)  
+        // }
     }
 }
