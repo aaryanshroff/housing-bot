@@ -1,18 +1,18 @@
 package main
 
 import (
+    "encoding/json"
     "fmt"
-    "io"
     "os"
     "net/http"
 )
 
-type Message sturct {
+type Message struct {
     Text string `json:"text"`
 }
 
 type Messaging struct {
-    Message string `json:"message"`
+    Message Message `json:"message"`
 }
 
 type Entry struct {
@@ -50,7 +50,7 @@ func WebhookHandler (w http.ResponseWriter, r *http.Request) {
         var b Body
         json.NewDecoder(r.Body).Decode(&b)
         if b.Object == "page" {
-            fmt.Println(b.Entry[0].Messaging[0].Text
+            fmt.Println(b.Entry[0].Messaging[0].Message.Text)
         }
     }
 }
